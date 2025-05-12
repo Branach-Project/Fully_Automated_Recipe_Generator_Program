@@ -1,0 +1,84 @@
+OLD FORMAT:
+[BP-EXL-0005-01] S-LAD FED BASE 8.8	BM/Stock	1.00	Unit	1.00		
+[BP-EXL-0011-01] S-LAD FED FLY 8.8	BM/Stock	1.00	Unit	1.00		
+[BP-EXF-0110-02] C-LAD ENDCAP BLACK	BM/Stock	2.00	Unit	2.00		
+[BP-RIV-0008-01] C-RIV ENDCAPS RIVET	BM/Stock	8.00	Unit	8.00		
+[BP-RIV-0011-01] C-RIV SWIVEL FOOT RIVET	BM/Stock	16.00	Unit	16.00		
+[BP-EXF-8090-01] S-FOT FOOT LH	BM/Stock	1.00	Unit	1.00		
+[BP-EXF-8091-01] S-FOT FOOT RH	BM/Stock	1.00	Unit	1.00		
+[BP-EXA-8073-01] F-STR POLE STRAP FLY	BM/Stock	1.00	Unit	1.00		
+[BP-RIV-0085-01] C-PLT RIVET-4	BM/Stock	8.00	Unit	8.00		
+[BP-EXF-0206-01] C-ROP SPLICE CLIP 8MM	BM/Stock	1.00	Unit	1.00		
+[BP-EXF-0217-01] R-ROP 8MM BLK/YELL POLYPROP	BM/Stock	3.20	m	3.20		
+[BP-FCL-8030-01] F-ACC TETHERING SYSTEM	BM/Stock	1.00	Unit	1.00		
+[BP-RIV-0079-01] C-PLT RIVET-2	BM/Stock	10.00	Unit	10.00		
+[BP-RIV-0180-01] C-RIV TETHERING SYS	BM/Stock	8.00	Unit	8.00		
+[BP-EXF-0218-01] R-ROP 10.5MM WHITE ARAPOLINE	BM/Stock	11.28	m	11.28		
+[BP-EXF-0137-01] C-ROP CABLE TIE 200X4.8	BM/Stock	2.00	Unit	2.00		
+[BP-EXF-0205-01] C-ROP SPLICE CLIP 10MM	BM/Stock	1.00	Unit	1.00		
+[BP-EXF-0110-02] C-LAD ENDCAP BLACK	BM/Stock	2.00	Unit	2.00		
+[BP-RIV-0008-01] C-RIV ENDCAPS RIVET	BM/Stock	8.00	Unit	8.00		
+[BP-CON-0053-01] R-CON LBL BLK RIBBON	BM/Stock	76.00	mm	76.00		
+[BP-CON-0052-01] R-CON LBL VINYL TAPE	BM/Stock	76.00	mm	76.00		
+[BP-EXA-0100-01] C-ACC TIE DOWN BAR	BM/Stock	1.00	Unit	1.00		
+[BP-RIV-0085-01] C-PLT RIVET-4	BM/Stock	8.00	Unit	8.00		
+[BP-EXA-8010-02] S-BRK CENTRE PULLEY	BM/Stock	1.00	Unit	1.00		
+[BP-RIV-0079-01] C-PLT RIVET-2	BM/Stock	16.00	Unit	16.00		
+[BP-EXF-8011-01] S-LAT FED CONV LATCH	BM/Stock	1.00	Unit	1.00		
+[BP-RIV-0079-01] C-PLT RIVET-2	BM/Stock	12.00	Unit	12.00		
+[BP-EXF-0231-01] S-BRK RUNNING BRK	BM/Stock	2.00	Unit	2.00		
+[BP-RIV-0085-01] C-PLT RIVET-4	BM/Stock	8.00	Unit	8.00		
+[BP-EXF-8161-01] S-BRK STOP BRACKET	BM/Stock	1.00	Unit	1.00		
+[BP-RIV-0085-01] C-PLT RIVET-4	BM/Stock	4.00	Unit	4.00		
+[BP-LBL-0020-02] C-LBL BRAN BLACK LBL	BM/Stock	2.00	Unit	2.00		
+[BP-LBL-0027-01] C-LBL FED 8.8	BM/Stock	1.00	Unit	1.00		
+[BP-LBL-0038-01] C-LBL CAUTION LEAN ANGLE	BM/Stock	1.00	Unit	1.00		
+[BP-LBL-0042-01] C-LBL DANGER DO NOT STAND	BM/Stock	1.00	Unit	1.00		
+[BP-EXF-0110-02] C-LAD ENDCAP BLACK	BM/Stock	2.00	Unit	2.00		
+[BP-RIV-0008-01] C-RIV ENDCAPS RIVET	BM/Stock	6.00	Unit	6.00			
+
+
+NEW FORMAT:
+[{'id': 383348, 'product_id': [15146, '[BP-EXL-0005-01] S-LAD FED BASE 8.8'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383372, 'product_id': [14918, '[BP-EXF-0110-02] C-LAD ENDCAP BLACK'], 'product_uom_qty': 2.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383396, 'product_id': [17223, '[BP-RIV-0008-01] C-RIV ENDCAPS RIVET'], 'product_uom_qty': 8.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383420, 'product_id': [17224, '[BP-RIV-0011-01] C-RIV SWIVEL FOOT RIVET'], 'product_uom_qty': 16.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383444, 'product_id': [15043, '[BP-EXF-8090-01] S-FOT FOOT LH'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383468, 'product_id': [15044, '[BP-EXF-8091-01] S-FOT FOOT RH'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383492, 'product_id': [14848, '[BP-EXA-8073-01] F-STR POLE STRAP FLY'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383516, 'product_id': [17230, '[BP-RIV-0085-01] C-PLT RIVET-4'], 'product_uom_qty': 8.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383540, 'product_id': [14956, '[BP-EXF-0206-01] C-ROP SPLICE CLIP 8MM'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383564, 'product_id': [14966, '[BP-EXF-0217-01] R-ROP 8MM BLK/YELL POLYPROP'], 'product_uom_qty': 3.2, 'reserved_availability': 0.0, 'product_uom': [5, 'm']}, {'id': 383588, 'product_id': [15794, '[BP-FCL-8030-01] F-ACC TETHERING SYSTEM'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383612, 'product_id': [17226, '[BP-RIV-0079-01] C-PLT RIVET-2'], 'product_uom_qty': 10.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383636, 'product_id': [17232, '[BP-RIV-0180-01] C-RIV TETHERING SYS'], 'product_uom_qty': 8.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383660, 'product_id': [14967, '[BP-EXF-0218-01] R-ROP 10.5MM WHITE ARAPOLINE'], 'product_uom_qty': 11.28, 'reserved_availability': 0.0, 'product_uom': [5, 'm']}, {'id': 383684, 'product_id': [14936, '[BP-EXF-0137-01] C-ROP CABLE TIE 200X4.8'], 'product_uom_qty': 2.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383708, 'product_id': [14955, '[BP-EXF-0205-01] C-ROP SPLICE CLIP 10MM'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383732, 'product_id': [14918, '[BP-EXF-0110-02] C-LAD ENDCAP BLACK'], 'product_uom_qty': 2.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383756, 'product_id': [17223, '[BP-RIV-0008-01] C-RIV ENDCAPS RIVET'], 'product_uom_qty': 8.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383780, 'product_id': [14651, '[BP-CON-0053-01] R-CON LBL BLK RIBBON'], 'product_uom_qty': 76.0, 'reserved_availability': 0.0, 'product_uom': [6, 'mm']}, {'id': 383804, 'product_id': [14650, '[BP-CON-0052-01] R-CON LBL VINYL TAPE'], 'product_uom_qty': 76.0, 'reserved_availability': 0.0, 'product_uom': [6, 'mm']}, {'id': 383828, 'product_id': [14753, '[BP-EXA-0100-01] C-ACC TIE DOWN BAR'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383852, 'product_id': [17230, '[BP-RIV-0085-01] C-PLT RIVET-4'], 'product_uom_qty': 
+8.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383876, 'product_id': [14830, '[BP-EXA-8010-02] S-BRK CENTRE PULLEY'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383900, 'product_id': [17226, '[BP-RIV-0079-01] C-PLT RIVET-2'], 'product_uom_qty': 16.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383924, 'product_id': [15040, '[BP-EXF-8011-01] 
+S-LAT FED CONV LATCH'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383948, 'product_id': [17226, '[BP-RIV-0079-01] C-PLT RIVET-2'], 'product_uom_qty': 12.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383972, 'product_id': [14978, '[BP-EXF-0231-01] S-BRK RUNNING BRK'], 'product_uom_qty': 2.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 383996, 'product_id': [17230, '[BP-RIV-0085-01] C-PLT RIVET-4'], 'product_uom_qty': 8.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384020, 'product_id': [15103, '[BP-EXF-8161-01] S-BRK STOP BRACKET'], 
+'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384044, 'product_id': [17230, '[BP-RIV-0085-01] C-PLT RIVET-4'], 'product_uom_qty': 4.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384068, 'product_id': [15152, '[BP-EXL-0011-01] S-LAD FED FLY 8.8'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384092, 'product_id': [15834, '[BP-LBL-0020-02] C-LBL BRAN BLACK LBL'], 'product_uom_qty': 2.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384116, 'product_id': [15840, '[BP-LBL-0027-01] C-LBL FED 8.8'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384140, 'product_id': [15851, '[BP-LBL-0038-01] C-LBL CAUTION LEAN ANGLE'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384164, 'product_id': [15854, '[BP-LBL-0042-01] C-LBL DANGER DO NOT STAND'], 'product_uom_qty': 1.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384188, 'product_id': [14918, '[BP-EXF-0110-02] C-LAD ENDCAP BLACK'], 'product_uom_qty': 2.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}, {'id': 384212, 'product_id': [17223, '[BP-RIV-0008-01] C-RIV ENDCAPS RIVET'], 'product_uom_qty': 6.0, 'reserved_availability': 0.0, 'product_uom': [1, 'Unit']}]
+
+New Generated Output:
+[BP-EXL-0005-01] S-LAD FED BASE 8.8     BM/Stock        1.00    Unit    1.00
+[BP-EXF-0110-02] C-LAD ENDCAP BLACK     BM/Stock        2.00    Unit    2.00
+[BP-RIV-0008-01] C-RIV ENDCAPS RIVET    BM/Stock        8.00    Unit    8.00
+[BP-RIV-0011-01] C-RIV SWIVEL FOOT RIVET        BM/Stock        16.00   Unit    16.00
+[BP-EXF-8090-01] S-FOT FOOT LH  BM/Stock        1.00    Unit    1.00
+[BP-EXF-8091-01] S-FOT FOOT RH  BM/Stock        1.00    Unit    1.00
+[BP-EXA-8073-01] F-STR POLE STRAP FLY   BM/Stock        1.00    Unit    1.00
+[BP-RIV-0085-01] C-PLT RIVET-4  BM/Stock        8.00    Unit    8.00
+[BP-EXF-0206-01] C-ROP SPLICE CLIP 8MM  BM/Stock        1.00    Unit    1.00
+[BP-EXF-0217-01] R-ROP 8MM BLK/YELL POLYPROP    BM/Stock        3.20    m       3.20
+[BP-FCL-8030-01] F-ACC TETHERING SYSTEM BM/Stock        1.00    Unit    1.00
+[BP-RIV-0079-01] C-PLT RIVET-2  BM/Stock        10.00   Unit    10.00
+[BP-RIV-0180-01] C-RIV TETHERING SYS    BM/Stock        8.00    Unit    8.00
+[BP-EXF-0218-01] R-ROP 10.5MM WHITE ARAPOLINE   BM/Stock        11.28   m       11.28
+[BP-EXF-0137-01] C-ROP CABLE TIE 200X4.8        BM/Stock        2.00    Unit    2.00
+[BP-EXF-0205-01] C-ROP SPLICE CLIP 10MM BM/Stock        1.00    Unit    1.00
+[BP-EXF-0110-02] C-LAD ENDCAP BLACK     BM/Stock        2.00    Unit    2.00
+[BP-RIV-0008-01] C-RIV ENDCAPS RIVET    BM/Stock        8.00    Unit    8.00
+[BP-CON-0053-01] R-CON LBL BLK RIBBON   BM/Stock        76.00   mm      76.00
+[BP-CON-0052-01] R-CON LBL VINYL TAPE   BM/Stock        76.00   mm      76.00
+[BP-EXA-0100-01] C-ACC TIE DOWN BAR     BM/Stock        1.00    Unit    1.00
+[BP-RIV-0085-01] C-PLT RIVET-4  BM/Stock        8.00    Unit    8.00
+[BP-EXA-8010-02] S-BRK CENTRE PULLEY    BM/Stock        1.00    Unit    1.00
+[BP-RIV-0079-01] C-PLT RIVET-2  BM/Stock        16.00   Unit    16.00
+[BP-EXF-8011-01] S-LAT FED CONV LATCH   BM/Stock        1.00    Unit    1.00
+[BP-RIV-0079-01] C-PLT RIVET-2  BM/Stock        12.00   Unit    12.00
+[BP-EXF-0231-01] S-BRK RUNNING BRK      BM/Stock        2.00    Unit    2.00
+[BP-RIV-0085-01] C-PLT RIVET-4  BM/Stock        8.00    Unit    8.00
+[BP-EXF-8161-01] S-BRK STOP BRACKET     BM/Stock        1.00    Unit    1.00
+[BP-RIV-0085-01] C-PLT RIVET-4  BM/Stock        4.00    Unit    4.00
+[BP-EXL-0011-01] S-LAD FED FLY 8.8      BM/Stock        1.00    Unit    1.00
+[BP-LBL-0020-02] C-LBL BRAN BLACK LBL   BM/Stock        2.00    Unit    2.00
+[BP-LBL-0027-01] C-LBL FED 8.8  BM/Stock        1.00    Unit    1.00
+[BP-LBL-0038-01] C-LBL CAUTION LEAN ANGLE       BM/Stock        1.00    Unit    1.00
+[BP-LBL-0042-01] C-LBL DANGER DO NOT STAND      BM/Stock        1.00    Unit    1.00
+[BP-EXF-0110-02] C-LAD ENDCAP BLACK     BM/Stock        2.00    Unit    2.00
+[BP-RIV-0008-01] C-RIV ENDCAPS RIVET    BM/Stock        6.00    Unit    6.00

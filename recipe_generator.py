@@ -527,7 +527,8 @@ class RecipeGenerator:
             self.ladder_end_calibration_offset = 40 - self.DistEndToLastRungCut[key]
         
         # Open file to write final recipe
-        with open('../CAM Output/' + filename + '.txt', 'w') as file:
+        path = r"X:\CAD\E091-01 Manufacturing Info System\CAM Output"
+        with open(rf"{path}\{filename}.txt", 'w') as file:
             # Write header information
             print("distendtolastrung is here", self.DistEndToLastRungCut)
             print("ladder length before moderation", self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch))

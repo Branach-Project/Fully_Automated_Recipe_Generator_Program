@@ -39,7 +39,7 @@ class Database:
             print('move_raw_ids', move_raw_ids)
             
             # Step 4: Read details about each stock move (raw material component)
-            raw_material_details = models.execute_kw(db, uid, password, 'stock.move', 'read', [move_raw_ids, ['product_id', 'product_uom_qty', 'reserved_availability', 'product_uom']], context )
+            raw_material_details = models.execute_kw(db, uid, password, 'stock.move', 'read', [move_raw_ids, ['product_id', 'product_uom_qty', 'quantity', 'product_uom']], context )
             
             # Print the list of raw material components
             print("Raw material components:", raw_material_details)

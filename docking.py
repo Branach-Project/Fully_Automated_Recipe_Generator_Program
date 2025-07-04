@@ -1,3 +1,8 @@
+from database_BOM import Database
+from formatting import Formatting
+from recipe_generator import RecipeGenerator
+from bay_allocation import BayAllocation
+
 import os
 import time
 import ast
@@ -6,7 +11,7 @@ import sys
 import numpy as np
 import pyodbc
 
-class RecipeGenerator:
+class Docking:
     def __init__(self):
         # Initialize default values and configuration parameters
         self.RungCount = 13
@@ -556,13 +561,17 @@ class RecipeGenerator:
             )
 
             # Write each hole coordinate with associated data
-            for item in coords:
-                x, y, z, code, description, d, p = item
-                print("type of x", type(p))
-                print(x, y, z, code, description, d, p)
-                position_label = position_identifiers[p] if p < len(position_identifiers) else "Unknown"
-                formatted_line = f"X{x} Y{y} Z{z} D{d} P:{position_label} - ({code} - {description})"
-                file.write('\n' + formatted_line)
+
+            x = float(228.0)
+            y = float(-153.5)
+            z = float(60.0)
+            code = "BP-TOP-0001-01"
+            description = "Top head unit attatchment T3 - Right"
+            d = float(5.0)
+            p = int(7)
+            position_label = position_identifiers[p] if p < len(position_identifiers) else "Unknown"
+            formatted_line = f"X{x} Y{y} Z{z} D{d} P:{position_label} - ({code} - {description})"
+            file.write('\n' + formatted_line)
 
         print(f"Data has been formatted and saved to {filename}.")
 
@@ -678,3 +687,11 @@ class RecipeGenerator:
         self.cursor.close()
         conn.close()
         return execute_fly_or_base
+
+
+
+
+
+
+
+

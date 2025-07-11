@@ -375,7 +375,7 @@ class Docking:
                         self.DistEndToLastRungCut[key] = 305
                     #dynamic for base
                     if (self.LadderFoot == "SF" or self.LadderFoot == "SN" or self.LadderFoot == "SG") and key == "B":
-                        self.DistEndToLastRungCut[key] = 275
+                        self.DistEndToLastRungCut[key] = 232.5
                     if self.LadderFoot == "RF" and key == "B":
                         self.DistEndToLastRungCut[key] = 305
 

@@ -375,7 +375,7 @@ class Docking:
                         self.DistEndToLastRungCut[key] = 305
                     #dynamic for base
                     if (self.LadderFoot == "SF" or self.LadderFoot == "SN" or self.LadderFoot == "SG") and key == "B":
-                        self.DistEndToLastRungCut[key] = 232.5
+                        self.DistEndToLastRungCut[key] = 232.5 #232.5
                     if self.LadderFoot == "RF" and key == "B":
                         self.DistEndToLastRungCut[key] = 305
 
@@ -555,7 +555,7 @@ class Docking:
                 f"ID:{'empty'}   ITEM: {ITEM}    TYPE:{'EXTENSION'}     "
                 f"FBDESIGNATION:{key}     OUTSIDEWIDTH:{self.SectionWidth}     "
                 f"PITCH:{self.Pitch}    FIRSTOFRUNGOFFSET:{self.DistEndToFirstRungRaw}  "
-                f"STILELENGHT:{self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch) - self.ladder_end_calibration_offset}   "
+                f"STILELENGHT:{self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch)}   "
                 f"DOCKANGBOT:{'0'}   DOCKANGTOP:{'0'}   "
                 f"RUNGNO:{self.RungCount}   DOCKING:{'true' if self.DistEndToLastRungCut[key] < 305 else 'false'}   CALIBRATION:{self.ladder_end_calibration_offset}     "
             )

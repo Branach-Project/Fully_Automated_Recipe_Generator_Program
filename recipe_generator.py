@@ -476,10 +476,12 @@ class RecipeGenerator:
             if ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 3:
                     print(coords.pop(i))
+                    continue
 
             if ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 7:
                     print(coords.pop(i))
+                    continue
         print("---------- Unreachable Holes ----------")
 
         return coords
@@ -673,6 +675,12 @@ class RecipeGenerator:
                 self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
             elif execute_fly_or_base == "F" and key == "F":
                 self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
+
+            #display whether the ladder needs to be docked or not
+            if self.DistEndToLastRungCut[execute_fly_or_base] == 305:
+                print("Docking for the ladder false")
+            else:
+                print("Docking for the ladder true")
 
         # Close database connections
         self.cursor.close()

@@ -478,13 +478,18 @@ class Docking:
         for i in range(len(coords) - 1, -1, -1):
             # If hole is too close to a rung station and within ladder working range, remove it
             # ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) )
+            
+            print(f"Index i: {i}, coords length: {len(coords)}")
+
             if ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 3:
                     print(coords.pop(i))
+                    continue
 
             if ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 7:
                     print(coords.pop(i))
+                    continue
         print("---------- Unreachable Holes ----------")
 
         return coords
@@ -549,8 +554,7 @@ class Docking:
         with open(rf"{path}\{filename}.txt", 'w') as file:
             # Write header information
             print("distendtolastrung is here", self.DistEndToLastRungCut)
-            print("ladder length before moderation", self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch))
-            print("her is the ladder end calibration", self.ladder_end_calibration_offset)
+
             file.write(
                 f"ID:{'empty'}   ITEM: {ITEM}    TYPE:{'EXTENSION'}     "
                 f"FBDESIGNATION:{key}     OUTSIDEWIDTH:{self.SectionWidth}     "
@@ -656,6 +660,7 @@ class Docking:
                 self.expected_plane[key], 
                 self.expected_range[key]
             )
+            
 
             # Check if Terrain Master exists in the parts; if yes, apply offset
             if 'BP-LEV-8700-01' in [item for row in split_BF[key] for item in row]:
@@ -679,9 +684,15 @@ class Docking:
 
             # If the user specifically requested to finalize a 'B' or 'F' section, save again under "testFinal"
             if execute_fly_or_base == "B" and key == "B":
-                self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
+                self.format_and_save_coordinates(unreachable_removed, "test" + "Final", execute_fly_or_base, ITEM)
             elif execute_fly_or_base == "F" and key == "F":
-                self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
+                self.format_and_save_coordinates(unreachable_removed, "test" + "Final", execute_fly_or_base, ITEM)
+
+            #display whether the ladder needs to be docked or not
+            if self.DistEndToLastRungCut[execute_fly_or_base] == 305:
+                print("Docking for the ladder false")
+            else:
+                print("Docking for the ladder true")
 
         # Close database connections
         self.cursor.close()

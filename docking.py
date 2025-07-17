@@ -663,13 +663,9 @@ class Docking:
             
 
             # Check if Terrain Master exists in the parts; if yes, apply offset
-            if 'BP-LEV-8700-01' in [item for row in split_BF[key] for item in row]:
-                print("\nTerrain Master Detected: Adding relevant Offsets\n")
-                validated_coordinates = self.terrain_master_offset(validated_coordinates)
-            elif 'BP-LEV-8606-01' in [item for row in split_BF[key] for item in row]:
-                print("\nTerrain Master Detected: Adding relevant Offsets\n")
-                validated_coordinates = self.terrain_master_offset(validated_coordinates)
-            elif 'BP-LEV-8609-01' in [item for row in split_BF[key] for item in row]:
+            terrain_master_components = ['BP-LEV-8700-01', "BP-LEV-8606-01", "BP-LEV-8609-01", "BP-LEV-0056-01"]
+            our_list_of_components = [item for row in split_BF[key] for item in row]
+            if any(terrain_components in our_list_of_components for terrain_components in terrain_master_components):
                 print("\nTerrain Master Detected: Adding relevant Offsets\n")
                 validated_coordinates = self.terrain_master_offset(validated_coordinates)
 

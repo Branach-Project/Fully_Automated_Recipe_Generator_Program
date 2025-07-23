@@ -381,6 +381,8 @@ class RecipeGenerator:
                 x_offset = self.safe_eval(row[13], key) if row[13] else 0
                 y_offset = self.safe_eval(row[14], key) if row[14] else 0
 
+                #raw coordinates before
+                print("raw coordinates before offset", raw_coords)
                 # Update coordinates with offsets and additional data
                 for i in range(len(raw_coords)):
                     raw_coords[i][0] += x_offset + row[10]
@@ -390,6 +392,10 @@ class RecipeGenerator:
                     raw_coords[i].insert(-2, row[1])
                     raw_coords[i].insert(-2, row[6])
                 coords += raw_coords
+                print("here is the offset", x_offset)
+                print(row[10])
+                print("check if the offset is working", raw_coords)
+                print(coords)
         return coords
 
     def extract_number(self, text):

@@ -103,7 +103,7 @@ class Docking:
 
         conn_str = (
             r"DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};"
-            r"DBQ=X:\CAD\E091-01 Manufacturing Info System\testPythonDB.accdb;"
+            r"DBQ=X:\CAD\E091-01 Manufacturing Info System\PythonDB.accdb;"
         )
 
         try:

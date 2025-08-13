@@ -382,12 +382,12 @@ class RecipeGenerator:
                 y_offset = self.safe_eval(row[14], key) if row[14] else 0
 
                 #raw coordinates before
-                print("raw coordinates before offset", raw_coords)
+                print("raw coordinates before offset", row)
                 # Update coordinates with offsets and additional data
                 for i in range(len(raw_coords)):
-                    raw_coords[i][0] += x_offset + row[10]
-                    raw_coords[i][1] += y_offset + row[11]
-                    raw_coords[i][2] += row[12]
+                    raw_coords[i][0] += x_offset + row[10] + rows[i][6] # orginal coord + component base offset + hole base offset
+                    raw_coords[i][1] += y_offset + row[11] + rows[i][7]
+                    raw_coords[i][2] += row[12] + rows[i][8]
                     # Insert part code and description before hole diameter and face
                     raw_coords[i].insert(-2, row[1])
                     raw_coords[i].insert(-2, row[6])

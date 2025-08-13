@@ -392,8 +392,8 @@ class RecipeGenerator:
                     raw_coords[i].insert(-2, row[1])
                     raw_coords[i].insert(-2, row[6])
                 coords += raw_coords
-                print("here is the offset", x_offset)
-                print(row[10])
+                print("here is the offset")
+                print(row[12])
                 print("check if the offset is working", raw_coords)
                 print(coords)
         return coords

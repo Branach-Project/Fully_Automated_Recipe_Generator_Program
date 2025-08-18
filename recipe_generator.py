@@ -386,12 +386,12 @@ class RecipeGenerator:
                 # Update coordinates with offsets and additional data
                 for i in range(len(raw_coords)):
                     #Don't need hole base offset
-                    # raw_coords[i][0] += x_offset + row[10] + rows[i][6] # orginal coord + component base offset + hole base offset
-                    # raw_coords[i][1] += y_offset + row[11] + rows[i][7]
-                    # raw_coords[i][2] += row[12] + rows[i][8]
-                    raw_coords[i][0] += x_offset + row[10] # orginal coord + component base offset + hole base offset
-                    raw_coords[i][1] += y_offset + row[11]
-                    raw_coords[i][2] += row[12]
+                    raw_coords[i][0] += x_offset + row[10] + rows[i][6] # orginal coord + component base offset + hole base offset
+                    raw_coords[i][1] += y_offset + row[11] + rows[i][7]
+                    raw_coords[i][2] += row[12] + rows[i][8]
+                    # raw_coords[i][0] += x_offset + row[10] # orginal coord + component base offset + hole base offset
+                    # raw_coords[i][1] += y_offset + row[11]
+                    # raw_coords[i][2] += row[12]
                     # Insert part code and description before hole diameter and face
                     raw_coords[i].insert(-2, row[1])
                     raw_coords[i].insert(-2, row[6])

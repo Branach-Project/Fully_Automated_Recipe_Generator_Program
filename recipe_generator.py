@@ -270,7 +270,7 @@ class RecipeGenerator:
         conventional_latch = [ "BP-EXF-8011-01" ]
         if any(sublist[0] in branach_latch for sublist in array[section_type]):
             self.LatchType = "Branach"
-        if any(sublist[0] in conventional_latch for sublist in array[section_type]):
+        elif any(sublist[0] in conventional_latch for sublist in array[section_type]):
             self.LatchType = "Conventional"
         print("The latch type is", self.LatchType)
         
@@ -294,9 +294,9 @@ class RecipeGenerator:
                     # if it is a terrrain master
                     #check if it is a 9.8
                     if ITEM == "S-LAD FED BASE 9.8":
-                        split_BF[key][i][1] = [208]
+                        split_BF[key][i][1] = [202]
                     else:
-                        split_BF[key][i][1] = [207]
+                        split_BF[key][i][1] = [201]
                     
                 else: # if it is not a terrain master
                     if ITEM == "S-LAD FED BASE 9.8":
@@ -337,6 +337,7 @@ class RecipeGenerator:
         coordinate and component data into a single list.
         """
         coords = []
+        print("generated coordinates separated", separated)
         for i in range(len(separated)):
             for ID in separated[i][1]:
                 raw_coords = []
@@ -351,7 +352,7 @@ class RecipeGenerator:
                 self.cursor.execute("SELECT * FROM posData WHERE ID LIKE ?", (str(ID),))
                 row = self.cursor.fetchone()
                 print("posData in generate coords ----------------", row)
-
+                print("Fail at this ID", ID)
                 # Evaluate end cut offset if provided
                 if row[18] != None:
                     endCut = self.safe_eval(row[18], key)
@@ -373,10 +374,8 @@ class RecipeGenerator:
                         self.DistEndToLastRungCut[key] = 232.5 #232.5
                     if self.LadderFoot == "RF" and key == "B":
                         self.DistEndToLastRungCut[key] = 305
-
                     
                     
-
                 # Calculate offsets
                 x_offset = self.safe_eval(row[13], key) if row[13] else 0
                 y_offset = self.safe_eval(row[14], key) if row[14] else 0

@@ -299,9 +299,9 @@ class Docking:
                     # if it is a terrrain master
                     #check if it is a 9.8
                     if ITEM == "S-LAD FED BASE 9.8":
-                        split_BF[key][i][1] = [208]
+                        split_BF[key][i][1] = [202]
                     else:
-                        split_BF[key][i][1] = [207]
+                        split_BF[key][i][1] = [201]
                     
                 else: # if it is not a terrain master
                     if ITEM == "S-LAD FED BASE 9.8":

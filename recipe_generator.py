@@ -280,7 +280,7 @@ class RecipeGenerator:
             print("Stile not found on B.O.M")
             exit()
 
-    def dynamic_select(self, split_BF, key):
+    def dynamic_select(self, split_BF, key, product_display_name):
         print('this is what the dynamic select picks', split_BF)
         print('key here', key)
         terrain_master_components = {"BP-LEV-8609-01", "BP-LEV-8700-01", "BP-LEV-8606-01"}
@@ -314,12 +314,12 @@ class RecipeGenerator:
 
         
         print("ITEM split is here", ITEM.split())
-        utility = "N"
-        if key == "B":
-            while True:
-                utility = str(input("is it utility Y/N : "))
-                if utility == "Y" or utility == "N":
-                    break
+        utility = ""
+        if product_display_name.strip().lower().endswith('utility'):
+            utility == "Y"
+        else:
+            utility == "N"
+
         if utility == "Y":
             for i in range(len(split_BF[key]) - 1, -1, -1):
                 if split_BF[key][i][0] == "BP-FCL-0023-01" and key == "B":
@@ -577,7 +577,7 @@ class RecipeGenerator:
 
         print(f"Data has been formatted and saved to {filename}.")
 
-    def run(self, formatted_componets):
+    def run(self, formatted_componets, product_display_name, child_detail):
         """
         Main execution flow:
         1. Asks user to specify section type (F or B).
@@ -588,10 +588,7 @@ class RecipeGenerator:
         6. Removes unreachable holes and saves final coordinates.
         """
         print("running...")
-        while True:
-            execute_fly_or_base = str(input("Enter section F or B: "))
-            if execute_fly_or_base == "F" or execute_fly_or_base == "B":
-                break
+        execute_fly_or_base = child_detail
         conn = self.connect_to_MSaccess_DB()
 
         # Extract part IDs enclosed in brackets
@@ -638,7 +635,7 @@ class RecipeGenerator:
             self.get_section_info(split_BF, key)
             # dynamic selection
             print("input to dynamic select",split_BF,"here is the key", key)
-            split_BF_withkey = self.dynamic_select(split_BF, key)
+            split_BF_withkey = self.dynamic_select(split_BF, key, product_display_name)
             split_BF = split_BF_withkey
             print("Here is the split_BF after dynamic select", split_BF)
 
@@ -676,6 +673,7 @@ class RecipeGenerator:
             self.format_and_save_coordinates(unreachable_removed, "test" + key, key, ITEM)
 
             # If the user specifically requested to finalize a 'B' or 'F' section, save again under "testFinal"
+            print("execute fly or base" , execute_fly_or_base)
             if execute_fly_or_base == "B" and key == "B":
                 self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
             elif execute_fly_or_base == "F" and key == "F":

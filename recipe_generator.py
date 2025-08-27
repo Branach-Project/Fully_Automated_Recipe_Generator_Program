@@ -23,7 +23,6 @@ class RecipeGenerator:
         self.ITEM = ""      # Item name/description of the ladder or section
         self.LadderFoot = "TM"
         self.LatchType = ""
-        self.base_num = None
 
         # Expected "plane" setup for validation: Defines reference coordinates or offsets that 
         # certain holes must align to, depending on whether the section is 'B' (base) or 'F' (fly)
@@ -226,10 +225,6 @@ class RecipeGenerator:
                 print("ITEM is here", ITEM)
                 self.ITEM = ITEM
                 num = self.extract_number(row[1])
-                if section_type == "B":
-                    self.base_num = num
-                if section_type == "F":
-                    num = self.base_num
                 print("Here is num in get_section_info", num)
                 if num not in (i[0] for i in self.section_data):
                     print("Section Info Not Found / Implemented")

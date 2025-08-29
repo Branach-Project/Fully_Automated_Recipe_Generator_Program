@@ -251,7 +251,7 @@ class RecipeGenerator:
         rubber_north_power = {"BK-EXF-9044-01"}
         
         if any(sublist[0] in terrain_master_components for sublist in array[section_type]) and section_type == "B": #if it is terrain master
-            self.LadderFoot = "AT"
+            self.LadderFoot = "TM"
         if any(sublist[0] in swivel_feet for sublist in array[section_type]) and section_type == "B":
             self.LadderFoot = "SF"
         if any(sublist[0] in swivel_no_ice_pick for sublist in array[section_type]) and section_type == "B":
@@ -273,6 +273,13 @@ class RecipeGenerator:
         elif any(sublist[0] in conventional_latch for sublist in array[section_type]):
             self.LatchType = "Conventional"
         print("The latch type is", self.LatchType)
+
+
+        # Update the length of the ladder if it is TM and Branach latch
+        if section_type == "F" and self.LatchType == "Branach" and self.LadderFoot == "TM":
+            print("the lenght of the ladder hasbeen updated")
+            self.StileLength -= self.StileLength - self.Pitch
+            self.RungCount -= 1
         
         
 

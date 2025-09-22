@@ -98,7 +98,7 @@ class RecipeGenerator:
 
         conn_str = (
             r"DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};"
-            r"DBQ=X:\E091-01 Manufacturing Info System\PythonDB.accdb;"
+            r"DBQ=A:\E091-01 Manufacturing Info System\PythonDB.accdb;"
         )
 
         try:
@@ -558,7 +558,7 @@ class RecipeGenerator:
 
 
         # Open file to write final recipe
-        path = r"X:\E091-01 Manufacturing Info System\CAM Output"
+        path = r"A:\E091-01 Manufacturing Info System\CAM Output"
         with open(rf"{path}\{filename}.txt", 'w') as file:
             # Write header information
             print("distendtolastrung is here", self.DistEndToLastRungCut)

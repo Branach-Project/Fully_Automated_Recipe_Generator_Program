@@ -19,9 +19,8 @@ while loop == True:
     # F-LAD FEU 3.9 EN795 FC = BM/MO/06207-001
     # F-LAD FEU 5.1 EN795 FC = BM/MO/06208-001
     # F-LAD FEU 6.3 EN795 FC = BM/MO/06209-001 or BM/MO/13604-004
-    # EN795 = BM/MO/06210-001
+    # EN795 7.5 = BM/MO/06210-001
     # F-LAD FEU 8.7 EN795 FC = BM/MO/06211-001
-    #shjushsh
     #AU TM
     # F-LAD FED AT 6.4 = BM/MO/17194-002
     database = Database()

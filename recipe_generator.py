@@ -323,14 +323,15 @@ class RecipeGenerator:
         print("ITEM split is here", ITEM.split())
         utility = ""
         if product_display_name.strip().lower().endswith('utility'):
-            utility == "Y"
+            utility = "Y"
         else:
-            utility == "N"
+            utility = "N"
 
         if utility == "Y":
             for i in range(len(split_BF[key]) - 1, -1, -1):
                 if split_BF[key][i][0] == "BP-FCL-0023-01" and key == "B":
                     del split_BF[key][i]
+            print("This is an utility ladder")
 
 
         print("final result of the dynamic function", split_BF)
@@ -642,6 +643,7 @@ class RecipeGenerator:
             self.get_section_info(split_BF, key)
             # dynamic selection
             print("input to dynamic select",split_BF,"here is the key", key)
+            print("Here is the product display name", product_display_name)
             split_BF_withkey = self.dynamic_select(split_BF, key, product_display_name)
             split_BF = split_BF_withkey
             print("Here is the split_BF after dynamic select", split_BF)

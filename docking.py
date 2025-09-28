@@ -326,9 +326,9 @@ class Docking:
         print("ITEM split is here", ITEM.split())
         utility = ""
         if product_display_name.strip().lower().endswith('utility'):
-            utility == "Y"
+            utility = "Y"
         else:
-            utility == "N"
+            utility = "N"
         
         if utility == "Y":
             for i in range(len(split_BF[key]) - 1, -1, -1):

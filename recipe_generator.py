@@ -329,12 +329,21 @@ class RecipeGenerator:
 
         if utility == "Y":
             for i in range(len(split_BF[key]) - 1, -1, -1):
-                if split_BF[key][i][0] == "BP-FCL-0023-01" and key == "B":
+                if (split_BF[key][i][0] == "BP-FCL-0023-01" or split_BF[key][i][0] == "BP-FCL-0041-01") and key == "B":
                     del split_BF[key][i]
+            
             print("This is an utility ladder")
 
+        #get rid of T1 because it is not drilling reliably right now
+        for i in range(len(split_BF[key]) - 1, -1, -1):
+                if (split_BF[key][i][0] == "BP-TOP-8001-01" or split_BF[key][i][0] == "BP-TOP-0001-01") and key == "F":
+                    del split_BF[key][i]
 
-        print("final result of the dynamic function", split_BF)
+        #get rid of holes that the base won't drill properly
+        for i in range(len(split_BF[key]) - 1, -1, -1):
+                if (split_BF[key][i][0] == "BP-EXF-0110-02" or split_BF[key][i][0] == "BP-EXF-8141-01" or split_BF[key][i][0] == "BP-EXF-0030-02" or split_BF[key][i][0] == "BP-EXF-0032-02" or split_BF[key][i][0] == "BP-EXF-8161-01") and key == "B":
+                    del split_BF[key][i]
+        
         return split_BF
                 
 

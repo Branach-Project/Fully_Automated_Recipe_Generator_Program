@@ -688,9 +688,9 @@ class Docking:
 
             #display whether the ladder needs to be docked or not
             if self.DistEndToLastRungCut[execute_fly_or_base] == 305:
-                print("Docking for the ladder false")
+                print("Docking for the ladder not needed")
             else:
-                print("Docking for the ladder true")
+                print("Docking for the ladder needed")
 
         # Close database connections
         self.cursor.close()

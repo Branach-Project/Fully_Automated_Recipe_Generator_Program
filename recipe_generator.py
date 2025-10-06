@@ -341,7 +341,7 @@ class RecipeGenerator:
 
         #get rid of holes that the base won't drill properly
         for i in range(len(split_BF[key]) - 1, -1, -1):
-                if (split_BF[key][i][0] == "BP-EXF-0110-02" or split_BF[key][i][0] == "BP-EXF-8141-01" or split_BF[key][i][0] == "BP-EXF-0030-02" or split_BF[key][i][0] == "BP-EXF-0032-02" or split_BF[key][i][0] == "BP-EXF-8161-01") and key == "B":
+                if (split_BF[key][i][0] == "BP-EXF-0110-02" or split_BF[key][i][0] == "BP-EXF-8141-01" or split_BF[key][i][0] == "BP-EXF-0030-02" or split_BF[key][i][0] == "BP-EXF-0032-02" or split_BF[key][i][0] == "BP-EXF-8161-01" or split_BF[key][i][0] == "BP-LEV-8606-01" ) and key == "B":
                     del split_BF[key][i]
         
         return split_BF
@@ -699,9 +699,9 @@ class RecipeGenerator:
 
             #display whether the ladder needs to be docked or not
             if self.DistEndToLastRungCut[execute_fly_or_base] == 305:
-                print("Docking for the ladder false")
+                print("Docking for the ladder not needed")
             else:
-                print("Docking for the ladder true")
+                print("Docking for the ladder needed")
 
         # Close database connections
         self.cursor.close()

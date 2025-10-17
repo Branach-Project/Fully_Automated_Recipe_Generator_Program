@@ -23,6 +23,7 @@ while loop == True:
     # F-LAD FEU 8.7 EN795 FC = BM/MO/06211-001
     #AU TM
     # F-LAD FED AT 6.4 = BM/MO/17194-002
+    # Product F-LAD FED 6.4 (CP-RF-AR-TF-TA-PS-LS) = BM/MO/2509461-001
     database = Database()
     formatting = Formatting()
     generator = RecipeGenerator()

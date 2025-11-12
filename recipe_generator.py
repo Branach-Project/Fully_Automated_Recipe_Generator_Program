@@ -362,8 +362,6 @@ class RecipeGenerator:
                 # Fetch position details from posData
                 self.cursor.execute("SELECT * FROM posData WHERE ID LIKE ?", (str(ID),))
                 row = self.cursor.fetchone()
-                #print("posData in generate coords ----------------", row)
-                print("Fail at this ID", ID)
                 # Evaluate end cut offset if provided
                 if row[18] != None:
                     endCut = self.safe_eval(row[18], key)
@@ -388,17 +386,19 @@ class RecipeGenerator:
                     
                     
                 # Calculate offsets
-                x_offset = self.safe_eval(row[13], key) if row[13] else 0
-                y_offset = self.safe_eval(row[14], key) if row[14] else 0
+                print("hre is row", row)
+                x_formula = self.safe_eval(row[13], key) if row[13] else 0
+                y_fomrula = self.safe_eval(row[14], key) if row[14] else 0
+                Z_formula = row[9] if row[9] else 0
 
                 #raw coordinates before
                 print("raw coordinates before offset", row)
                 # Update coordinates with offsets and additional data
                 for i in range(len(raw_coords)):
                     #Don't need hole base offset
-                    raw_coords[i][0] += x_offset + row[10] + rows[i][6] # orginal coord + component base offset + hole base offset
-                    raw_coords[i][1] += y_offset + row[11] + rows[i][7]
-                    raw_coords[i][2] += row[12] + rows[i][8]
+                    raw_coords[i][0] += x_formula + row[10] + rows[i][6] # orginal coord + component base offset + hole base offset
+                    raw_coords[i][1] += y_fomrula + row[11] + rows[i][7]
+                    raw_coords[i][2] += Z_formula + row[12] + rows[i][8]
                     # raw_coords[i][0] += x_offset + row[10] # orginal coord + component base offset + hole base offset
                     # raw_coords[i][1] += y_offset + row[11]
                     # raw_coords[i][2] += row[12]

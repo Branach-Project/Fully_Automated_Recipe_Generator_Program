@@ -19,11 +19,11 @@ class Formatting:
         output_data = self.transform_data(input_data)
         
         # Print the output
-        print(output_data)
+        #print(output_data)
         
         return output_data
 
-    def transform_data(self, input_data):
+    def transform_data(self, input_data): # non cllaing outside
         # Initialize an empty string for concatenated output
         transformed_data = ""
 

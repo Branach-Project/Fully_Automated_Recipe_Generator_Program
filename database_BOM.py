@@ -44,13 +44,13 @@ class Database:
             
             # Extract the move_raw_ids
             move_raw_ids = mo_details[0]['move_raw_ids']
-            print('move_raw_ids', move_raw_ids)
+            #print('move_raw_ids', move_raw_ids)
             
             # Step 4: Read details about each stock move (raw material component)
             raw_material_details = models.execute_kw(db, uid, password, 'stock.move', 'read', [move_raw_ids, ['product_id', 'product_uom_qty', 'quantity', 'product_uom']], context )
             
             # Print the list of raw material components
-            print("Raw material components:", raw_material_details)
+            #print("Raw material components:", raw_material_details)
 
             #get the parent MO details
             # Read the product_id field (among others)
@@ -63,7 +63,7 @@ class Database:
 
             # product_id is returned as a list: [id, display_name]
             product_display_name = mo_data[0]['product_id'][1]
-            print("Product being produced:", product_display_name)
+            #print("Product being produced:", product_display_name)
         else:
             print("No manufacturing order found with the name BM/MO/......")
 
@@ -87,7 +87,7 @@ class Database:
         else: 
             child_detail = child_MO
 
-        print("the child detail", child_detail)
+        #print("the child detail", child_detail)
 
 
         return raw_material_details, parent_MO, product_display_name, child_detail

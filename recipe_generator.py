@@ -184,7 +184,7 @@ class RecipeGenerator:
             for FB in ['F', 'B']:
                 self.cursor.execute("SELECT * FROM posData WHERE PartNo LIKE ? AND FBDesignation LIKE ?", (part + '%', FB))
                 rows = self.cursor.fetchall()
-                print("posData in filter and separate ----------------", rows)
+                #print("posData in filter and separate ----------------", rows)
 
                 if rows:
                     temp = [instance[0] for instance in rows]
@@ -333,15 +333,10 @@ class RecipeGenerator:
             
             print("This is an utility ladder")
 
-        #get rid of T1 because it is not drilling reliably right now
-        for i in range(len(split_BF[key]) - 1, -1, -1):
-                if (split_BF[key][i][0] == "BP-TOP-8001-01" ) and key == "F":
-                    del split_BF[key][i]
-
         #get rid of holes that the base won't drill properly
-        for i in range(len(split_BF[key]) - 1, -1, -1):
-                if (split_BF[key][i][0] == "BP-EXF-0032-02" or split_BF[key][i][0] == "BP-EXF-8161-01" or split_BF[key][i][0] == "BP-LEV-8606-01") and key == "B":
-                    del split_BF[key][i]
+        # for i in range(len(split_BF[key]) - 1, -1, -1):
+        #         if (split_BF[key][i][0] == "BP-EXF-0032-02" ) and key == "B":
+        #             del split_BF[key][i]
         
         return split_BF
                 
@@ -360,14 +355,14 @@ class RecipeGenerator:
                 # Fetch component details from compData
                 self.cursor.execute("SELECT * FROM compData WHERE LinkID LIKE ?", (str(ID),))
                 rows = self.cursor.fetchall()
-                print("compData in generate coords ----------------", rows)
+                #print("compData in generate coords ----------------", rows)
                 for point in rows:
                     raw_coords.append([point[3], point[4], point[5], point[2], point[9]])
 
                 # Fetch position details from posData
                 self.cursor.execute("SELECT * FROM posData WHERE ID LIKE ?", (str(ID),))
                 row = self.cursor.fetchone()
-                print("posData in generate coords ----------------", row)
+                #print("posData in generate coords ----------------", row)
                 print("Fail at this ID", ID)
                 # Evaluate end cut offset if provided
                 if row[18] != None:
@@ -413,8 +408,8 @@ class RecipeGenerator:
                 coords += raw_coords
                 print("here is the offset")
                 print(row[12])
-                print("check if the offset is working", raw_coords)
-                print(coords)
+                #print("check if the offset is working", raw_coords)
+                #print(coords)
         return coords
 
     def extract_number(self, text):
@@ -493,19 +488,19 @@ class RecipeGenerator:
                 The x-coordinate is negative (indicating it's on the left side of the ladder).
                 The x-coordinate is greater than -(self.RungCount - 1) * self.Pitch (indicating it's not beyond the range of the last rung).
         """
-        print("---------- Unreachable Holes ----------")
-        print("remove unreachable holes debug", coords)
+        #print("---------- Unreachable Holes ----------")
+        #print("remove unreachable holes debug", coords)
         for i in range(len(coords) - 1, -1, -1):
             # If hole is too close to a rung station and within ladder working range, remove it
             # ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) )
             if ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 3:
-                    print(coords.pop(i))
+                    #print(coords.pop(i))
                     continue
 
             if ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 7:
-                    print(coords.pop(i))
+                    #print(coords.pop(i))
                     continue
         print("---------- Unreachable Holes ----------")
 

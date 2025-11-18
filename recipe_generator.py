@@ -495,13 +495,11 @@ class RecipeGenerator:
             # ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) )
             if ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 3:
-                    #print(coords.pop(i))
-                    continue
+                    coords.pop(i)
 
             if ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
                 if coords[i][-1] == 7:
-                    #print(coords.pop(i))
-                    continue
+                    coords.pop(i)
         print("---------- Unreachable Holes ----------")
 
         return coords

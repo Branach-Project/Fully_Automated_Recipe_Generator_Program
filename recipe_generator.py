@@ -94,7 +94,7 @@ class RecipeGenerator:
         Attempts to establish a connection to the Microsoft Access database.
         If successful, returns the connection object and sets the cursor for further SQL operations.
         """
-        print("Attempting to connect to Access Database...")
+        #print("Attempting to connect to Access Database...")
 
         conn_str = (
             r"DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};"
@@ -107,12 +107,12 @@ class RecipeGenerator:
 
             # Test the connection with a simple query
             self.cursor.execute("SELECT 1")
-            print("Connection successful!")
+            #print("Connection successful!")
             return conn
         except pyodbc.Error as ex:
             # Print error if connection fails
             sqlstate = ex.args[1]
-            print("Connection failed:", sqlstate)
+            #print("Connection failed:", sqlstate)
 
     def is_valid_formula(self, formula):
         """
@@ -201,7 +201,7 @@ class RecipeGenerator:
         for i in range(len(matches)):
             if matches[i].split()[0] == 'Build':
                 matches[i] = matches[i][7:]
-        print("Here are the matches", matches)
+        #print("Here are the matches", matches)
         return matches
 
     def get_section_info(self, array, section_type):
@@ -215,17 +215,17 @@ class RecipeGenerator:
         sections = [ID[0] for ID in array[section_type] if 'EXL' in ID[0]]
         updated_vals = False
         for ID in sections:
-            print("Here is ID and sections", ID, "Sections", sections)
-            print(self.cursor.execute("SELECT * FROM Sections WHERE ID LIKE ?", (ID + '%',)))
+            #print("Here is ID and sections", ID, "Sections", sections)
+            self.cursor.execute("SELECT * FROM Sections WHERE ID LIKE ?", (ID + '%',))
             row = self.cursor.fetchone()
-            print("Sections in get section info ----------------", row)
+            #print("Sections in get section info ----------------", row)
             if section_type == "B" and "BASE" in row[1] or (section_type == "F" and "FLY" in row[1]):
                 global ITEM
                 ITEM = row[1]
-                print("ITEM is here", ITEM)
+                #print("ITEM is here", ITEM)
                 self.ITEM = ITEM
                 num = self.extract_number(row[1])
-                print("Here is num in get_section_info", num)
+                #print("Here is num in get_section_info", num)
                 if num not in (i[0] for i in self.section_data):
                     print("Section Info Not Found / Implemented")
                 else:
@@ -238,11 +238,11 @@ class RecipeGenerator:
                                 self.Pitch = 300
                                 self.DistEndToFirstRungRaw = 260 if section_type == "F" else 300
                             self.RungCount = sublist[3]
-                            print("stile length", self.StileLength)
-                            print("rung count: ", self.RungCount)
+                            #print("stile length", self.StileLength)
+                            #print("rung count: ", self.RungCount)
                             updated_vals = True
         #find the typ of ladder foot
-        print("components ladder foot", array)
+        #print("components ladder foot", array)
         terrain_master_components = {"BP-LEV-8609-01", "BP-LEV-8700-01", "BP-LEV-8606-01"}
         swivel_feet = {"BP-EXF-8090-01","BP-EXF-0094-01", "BP-EXF-8091-01"}
         swivel_no_ice_pick = {"BP-EXF-8009-01"}
@@ -263,7 +263,7 @@ class RecipeGenerator:
         if any(sublist[0] in rubber_north_power for sublist in array[section_type]) and section_type == "B":
             self.LadderFoot = "RN"
         
-        print("2 ladder foot type", self.LadderFoot)
+        #print("2 ladder foot type", self.LadderFoot)
 
         #find the type of latch
         branach_latch = [ "BP-EXF-8101-03" ]
@@ -272,7 +272,7 @@ class RecipeGenerator:
             self.LatchType = "Branach"
         elif any(sublist[0] in conventional_latch for sublist in array[section_type]):
             self.LatchType = "Conventional"
-        print("The latch type is", self.LatchType)
+        #print("The latch type is", self.LatchType)
 
 
         # Update the length of the ladder if it is TM and Branach latch
@@ -287,8 +287,8 @@ class RecipeGenerator:
             exit()
 
     def dynamic_select(self, split_BF, key, product_display_name):
-        print('this is what the dynamic select picks', split_BF)
-        print('key here', key)
+        #print('this is what the dynamic select picks', split_BF)
+        #print('key here', key)
         terrain_master_components = {"BP-LEV-8609-01", "BP-LEV-8700-01", "BP-LEV-8606-01"}
         t3 = {"BP-TOP-0001-01", "BP-TOP-8001-01"}
         contains_t3 = any(sublist[0] in t3 for sublist in split_BF[key])
@@ -309,17 +309,17 @@ class RecipeGenerator:
                         split_BF[key][i][1] = [197]
                     else:
                         split_BF[key][i][1] = [134]
-                print("did the stopper bracket change", split_BF[key][i][1])
+                #print("did the stopper bracket change", split_BF[key][i][1])
 
             # or (contains_t3 and split_BF[key][i][0] == "BP-EXF-0110-02-TEMP")
             if (contains_t3 and split_BF[key][i][0] == "BP-EXF-0110-02"):
                 print(f"Removing {split_BF[key][i][0]} because BP-EXF-0030-02 exists")
                 del split_BF[key][i]
 
-            print("after the data type of the fly looks like this", split_BF)
+            #print("after the data type of the fly looks like this", split_BF)
 
         
-        print("ITEM split is here", ITEM.split())
+        #print("ITEM split is here", ITEM.split())
         utility = ""
         if product_display_name.strip().lower().endswith('utility'):
             utility = "Y"
@@ -348,7 +348,7 @@ class RecipeGenerator:
         coordinate and component data into a single list.
         """
         coords = []
-        print("generated coordinates separated", separated)
+        #print("generated coordinates separated", separated)
         for i in range(len(separated)):
             for ID in separated[i][1]:
                 raw_coords = []
@@ -365,13 +365,13 @@ class RecipeGenerator:
                 # Evaluate end cut offset if provided
                 if row[18] != None:
                     endCut = self.safe_eval(row[18], key)
-                    print("endcut in generate coord", endCut)
-                    print("The ladder foot type is", self.LadderFoot)
+                    #print("endcut in generate coord", endCut)
+                    #print("The ladder foot type is", self.LadderFoot)
                     if endCut < self.DistEndToLastRungCut[key]:
                         self.DistEndToLastRungCut[key] = endCut
                     #dynamic for fly
-                    print("2 the latch type" , self.LatchType)
-                    print("key", key)
+                    #print("2 the latch type" , self.LatchType)
+                    #print("key", key)
                     if self.LadderFoot != "TM" and key == "F" and self.LatchType == "Conventional":
                         self.DistEndToLastRungCut[key] = 305
                     if (self.LadderFoot == "SF" or self.LadderFoot == "SN" or self.LadderFoot == "SG") and key == "F":
@@ -386,13 +386,13 @@ class RecipeGenerator:
                     
                     
                 # Calculate offsets
-                print("hre is row", row)
+                #print("hre is row", row)
                 x_formula = self.safe_eval(row[13], key) if row[13] else 0
                 y_fomrula = self.safe_eval(row[14], key) if row[14] else 0
                 Z_formula = row[9] if row[9] else 0
 
                 #raw coordinates before
-                print("raw coordinates before offset", row)
+                #print("raw coordinates before offset", row)
                 # Update coordinates with offsets and additional data
                 for i in range(len(raw_coords)):
                     #Don't need hole base offset
@@ -406,8 +406,8 @@ class RecipeGenerator:
                     raw_coords[i].insert(-2, row[1])
                     raw_coords[i].insert(-2, row[6])
                 coords += raw_coords
-                print("here is the offset")
-                print(row[12])
+                #print("here is the offset")
+                #print(row[12])
                 #print("check if the offset is working", raw_coords)
                 #print(coords)
         return coords
@@ -451,7 +451,7 @@ class RecipeGenerator:
 
                 # If coordinate doesn't match the expected plane, correct it
                 if coord[array_index] != expected_value:
-                    print(f"Coordinate mismatch at {['x-coord ','y-coord ','z-coord '][array_index]}: {coord[array_index]} replaced with {expected_value} - {coord[-3]}")
+                    #print(f"Coordinate mismatch at {['x-coord ','y-coord ','z-coord '][array_index]}: {coord[array_index]} replaced with {expected_value} - {coord[-3]}")
                     coord[array_index] = expected_value
 
                 # Validate against expected range
@@ -459,7 +459,8 @@ class RecipeGenerator:
                 array_index = plane_rules[0]
                 # Check if coordinate is within the provided range
                 if not (plane_rules[1] < coord[array_index] < plane_rules[2]):
-                    print(f"Coordinate out of range at {['x-coord ','y-coord ','z-coord '][array_index]}: {coord[array_index]} please validate - {coord[-3]}")
+                    #print(f"Coordinate out of range at {['x-coord ','y-coord ','z-coord '][array_index]}: {coord[array_index]} please validate - {coord[-3]}")
+                    pass
         return coords
 
     def terrain_master_offset(self, coords):
@@ -482,25 +483,41 @@ class RecipeGenerator:
         Removes holes from the coordinate list that are deemed unreachable by the robot.
         Holes too close to rungs (within 6cm) are currently removed.
         Conditions:
-            It is too close to a rung station:
-                The x-coordinate (first element of coords[i]) modulo the pitch (self.Pitch) is less than 60, or the remaining distance to the next pitch boundary is less than 60.
-            It is within the ladder's working range:
-                The x-coordinate is negative (indicating it's on the left side of the ladder).
-                The x-coordinate is greater than -(self.RungCount - 1) * self.Pitch (indicating it's not beyond the range of the last rung).
+            When x is negative, x it will contact the rung. 
         """
+
         #print("---------- Unreachable Holes ----------")
         #print("remove unreachable holes debug", coords)
+        remove_array = []
         for i in range(len(coords) - 1, -1, -1):
-            # If hole is too close to a rung station and within ladder working range, remove it
-            # ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) )
-            if ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
-                if coords[i][-1] == 3:
-                    coords.pop(i)
+            
+            #0:x 1:y 2:z 3:component index 4:component name 5:diameter 6:faces
+           
+            if coords[i][-1] == 3:# LI should notice the box for the front side
+                if(coords[i][0] < 0) and (coords[i][2] < -10) and ((abs(coords[i][0]) % self.Pitch) < 120) :
+                    print("LI",(coords[i][0] % self.Pitch))
+                    remove_array.append(coords.pop(i))
+                    continue
+            if coords[i][-1] == 7: # RI should notice the box for the back side.
+                if(coords[i][0] < 0) and (coords[i][2] < -10) and  ((self.Pitch - (abs(coords[i][0]) % self.Pitch)) < 120):
+                    print("RI",self.Pitch - (coords[i][0] % self.Pitch))
+                    remove_array.append(coords.pop(i))
+                    continue
+            # if ((coords[i][0] % self.Pitch) < 80 or ((self.Pitch - 80) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
+            #     if coords[i][-1] == 3:
+            #         remove_array.append(coords.pop(i))
+            #         continue
+            # #125.5
+            # # means robot will do short swap
+            # if coords[i][-1] == 7:
+            #     if (coords[i][0] % self.Pitch < 125.5)
+            # if ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch))) and (coords[i][2] < 0 or ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch)))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
+            #     if coords[i][-1] == 7:
+            #         remove_array.append(coords.pop(i))
+            #         continue
 
-            if ((coords[i][0] % self.Pitch) < 40 or ((self.Pitch - 40) < (coords[i][0] % self.Pitch))) and ( (coords[i][0] < 0) and (coords[i][0] > -(self.RungCount-1)*self.Pitch) ):
-                if coords[i][-1] == 7:
-                    coords.pop(i)
         print("---------- Unreachable Holes ----------")
+        print(remove_array)
 
         return coords
 
@@ -563,9 +580,9 @@ class RecipeGenerator:
         path = r"A:\E091-01 Manufacturing Info System\CAM Output"
         with open(rf"{path}\{filename}.txt", 'w') as file:
             # Write header information
-            print("distendtolastrung is here", self.DistEndToLastRungCut)
-            print("ladder length before moderation", self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch))
-            print("her is the ladder end calibration", self.ladder_end_calibration_offset)
+            #print("distendtolastrung is here", self.DistEndToLastRungCut)
+            #print("ladder length before moderation", self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch))
+            #print("her is the ladder end calibration", self.ladder_end_calibration_offset)
             file.write(
                 f"ID:{'empty'}   ITEM: {ITEM}    TYPE:{'EXTENSION'}     "
                 f"FBDESIGNATION:{key}     OUTSIDEWIDTH:{self.SectionWidth}     "
@@ -578,13 +595,13 @@ class RecipeGenerator:
             # Write each hole coordinate with associated data
             for item in coords:
                 x, y, z, code, description, d, p = item
-                print("type of x", type(p))
-                print(x, y, z, code, description, d, p)
+                #print("type of x", type(p))
+                #print(x, y, z, code, description, d, p)
                 position_label = position_identifiers[p] if p < len(position_identifiers) else "Unknown"
                 formatted_line = f"X{x} Y{y} Z{z} D{d} P:{position_label} - ({code} - {description})"
                 file.write('\n' + formatted_line)
 
-        print(f"Data has been formatted and saved to {filename}.")
+        #print(f"Data has been formatted and saved to {filename}.")
 
     def run(self, formatted_componets, product_display_name, child_detail):
         """
@@ -596,7 +613,7 @@ class RecipeGenerator:
         5. Splits parts into 'F' and 'B', retrieves section info, generates coordinates, and validates them.
         6. Removes unreachable holes and saves final coordinates.
         """
-        print("running...")
+
         execute_fly_or_base = child_detail
         conn = self.connect_to_MSaccess_DB()
 
@@ -632,7 +649,7 @@ class RecipeGenerator:
 
         # Filter and separate parts based on F/B designation
         split_BF = self.filter_and_separate(flat_list_ID)
-        print("Here is the result after filter and separate", split_BF)
+        #print("Here is the result after filter and separate", split_BF)
 
         for key in list(split_BF.keys())[::-1]: #list is reversed because we need base first for the foot type
             # Set SectionWidth and DistEndToFirstRungRaw depending on section type
@@ -640,14 +657,14 @@ class RecipeGenerator:
             self.DistEndToFirstRungRaw = 290 if key == "B" else 305
 
             # Get section details from DB and update class attributes
-            print("Here is the inputs to get_section_info", split_BF, "here is the key", key)
+            #print("Here is the inputs to get_section_info", split_BF, "here is the key", key)
             self.get_section_info(split_BF, key)
             # dynamic selection
-            print("input to dynamic select",split_BF,"here is the key", key)
-            print("Here is the product display name", product_display_name)
+            #print("input to dynamic select",split_BF,"here is the key", key)
+            #print("Here is the product display name", product_display_name)
             split_BF_withkey = self.dynamic_select(split_BF, key, product_display_name)
             split_BF = split_BF_withkey
-            print("Here is the split_BF after dynamic select", split_BF)
+            #print("Here is the split_BF after dynamic select", split_BF)
 
             # Remove EXL parts from the main list after processing section info
             for i in range(len(split_BF[key]) - 1, -1, -1):
@@ -656,7 +673,8 @@ class RecipeGenerator:
 
             # Generate hole coordinates
             if key == "F":
-                print("Here is what the split_BF looks like before generate coords", split_BF[key])
+                #print("Here is what the split_BF looks like before generate coords", split_BF[key])
+                pass
             coords = self.generate_coords(split_BF[key], key)
             # Sort and validate coordinates
             sorted_coordinates = self.sort_by_x_and_face(coords)
@@ -670,7 +688,7 @@ class RecipeGenerator:
             terrain_master_components = ['BP-LEV-8700-01', "BP-LEV-8606-01", "BP-LEV-8609-01", "BP-LEV-0056-01"]
             our_list_of_components = [item for row in split_BF[key] for item in row]
             if any(terrain_components in our_list_of_components for terrain_components in terrain_master_components):
-                print("\nTerrain Master Detected: Adding relevant Offsets\n")
+                #print("\nTerrain Master Detected: Adding relevant Offsets\n")
                 validated_coordinates = self.terrain_master_offset(validated_coordinates)
 
             # Remove unreachable holes

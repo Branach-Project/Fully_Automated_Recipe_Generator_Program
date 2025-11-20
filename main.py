@@ -32,16 +32,16 @@ while loop == True:
 
 
     component_list, BoM_namem, product_display_name, child_detail = database.calling_database() #wrong spelling
-    print("first_part")
-    print(component_list, BoM_namem, product_display_name, child_detail )
+
+    #print(component_list, BoM_namem, product_display_name, child_detail )
     formatted_componets = formatting.format(str(component_list))
-    print("format")
-    print(formatted_componets)
-    print("file ---------------------", formatted_componets)
+    #print("format")
+    #print(formatted_componets)
+    #print("file ---------------------", formatted_componets)
 
     #fetch position from database
     execute_fly_or_base = generator.run(formatted_componets, product_display_name, child_detail)
-    print(execute_fly_or_base)
+    
 
     #bay_allocation.run(execute_fly_or_base, BoM_name)
 

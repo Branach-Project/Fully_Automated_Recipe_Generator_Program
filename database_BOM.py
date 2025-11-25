@@ -1,10 +1,11 @@
 import xmlrpc.client
+from typing import Optional
 
 class Database:
     def __init__(self):
         pass
         
-    def calling_database(self):
+    def calling_database(self, parent_MO: Optional[str] = None, child_MO: Optional[str] = None):
         url = 'https://branacherp.odoo.com'
         db = 'visionsolutions-branach21-staging-4070959'
         username = 'harry@branach.com.au'
@@ -16,8 +17,10 @@ class Database:
         # What BoM we want to fetch
         #test 8.8 = BM/MO/11794-011
         #test child = BM/MO/11797-005
-        parent_MO = str( input("Enter the parent MO: ") )
-        child_MO = str( input("Enter the child MO or (B/F): ") )
+        if parent_MO is None:
+            parent_MO = str(input("Enter the parent MO: "))
+        if child_MO is None:
+            child_MO = str(input("Enter the child MO or (B/F): "))
         is_it_MO = True
         if child_MO.upper() == "B" or child_MO.upper() == "F":
             is_it_MO = False

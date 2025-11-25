@@ -1,4 +1,3 @@
-from database_BOM import Database
 from __future__ import annotations
 
 import platform

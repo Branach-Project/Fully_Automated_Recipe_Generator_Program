@@ -179,8 +179,8 @@ class RecipeGeneratorApp:
         self._last_thread = thread
         thread.start()
 
-        # Start the timeout timer (10 seconds)
-        self._timeout_timer = self.root.after(10000, self._timeout_check)
+        # Start the timeout timer (20 seconds)
+        self._timeout_timer = self.root.after(20000, self._timeout_check)
 
     def _run_in_background(self, parent_mo: str, child_mo: str) -> None:
         try:

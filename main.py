@@ -90,18 +90,34 @@ class RecipeGeneratorApp:
         child_entry = ttk.Entry(main_frame, textvariable=self.child_var, width=30)
         child_entry.grid(row=3, column=0, sticky="ew", pady=(0, 8))
 
+        # Sample buttons
+        button_frame = ttk.Frame(main_frame)
+        button_frame.grid(row=4, column=0, sticky="ew", pady=(0, 8))
+        sample_fly_btn = ttk.Button(button_frame, text="Sample Fly", command=self._sample_fly)
+        sample_fly_btn.pack(side="left", padx=(0, 8))
+        sample_base_btn = ttk.Button(button_frame, text="Sample Base", command=self._sample_base)
+        sample_base_btn.pack(side="left")
+
         self.run_button = ttk.Button(main_frame, text="Run Recipe", command=self._handle_run)
-        self.run_button.grid(row=4, column=0, sticky="ew")
+        self.run_button.grid(row=5, column=0, sticky="ew")
 
         self.log_output = ScrolledText(main_frame, height=15, width=60, state="disabled")
-        self.log_output.grid(row=5, column=0, pady=(12, 0), sticky="nsew")
+        self.log_output.grid(row=6, column=0, pady=(12, 0), sticky="nsew")
 
         # Configure tags for colored output
         self.log_output.tag_configure("success", foreground="green")
         self.log_output.tag_configure("fail", foreground="red")
 
-        main_frame.rowconfigure(5, weight=1)
+        main_frame.rowconfigure(6, weight=1)
         main_frame.columnconfigure(0, weight=1)
+
+    def _sample_fly(self):
+        self.parent_var.set("BM/MO/06207-001")
+        self.child_var.set("F")
+
+    def _sample_base(self):
+        # For now, do nothing (leave blank)
+        pass
 
     def _enqueue_log(self, message: str) -> None:
         self._log_queue.put(message)

@@ -1,17 +1,14 @@
-
 @echo off
 setlocal
 
-REM Launch the Recipe Generator GUI using the virtual environment's Python
+REM Launch the Recipe Generator GUI from the project folder
 set SCRIPT_DIR=%~dp0
 pushd "%SCRIPT_DIR%"
 
-REM Use the Python executable from the .venv folder
-.venv\Scripts\python.exe main.py
+REM Use python from PATH; change to full path (e.g., C:\Python311\python.exe) if needed
+set PYTHON_EXE=python
+
+%PYTHON_EXE% main.py
 
 popd
 endlocal
-
-REM Pause so the window stays open if there is an error
-pause
-

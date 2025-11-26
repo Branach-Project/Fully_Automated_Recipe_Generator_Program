@@ -69,6 +69,8 @@ class RecipeGeneratorApp:
 
         self._log_queue: queue.Queue[str] = queue.Queue()
         self._is_running = False
+        self._last_thread = None
+        self._timeout_timer = None
         arch = " ".join(filter(None, platform.architecture()))
         self._enqueue_log(f"Detected platform: {arch}")
         self._poll_queue()
@@ -94,6 +96,10 @@ class RecipeGeneratorApp:
         self.log_output = ScrolledText(main_frame, height=15, width=60, state="disabled")
         self.log_output.grid(row=5, column=0, pady=(12, 0), sticky="nsew")
 
+        # Configure tags for colored output
+        self.log_output.tag_configure("success", foreground="green")
+        self.log_output.tag_configure("fail", foreground="red")
+
         main_frame.rowconfigure(5, weight=1)
         main_frame.columnconfigure(0, weight=1)
 
@@ -116,7 +122,12 @@ class RecipeGeneratorApp:
 
     def _append_log(self, message: str) -> None:
         self.log_output.configure(state="normal")
-        self.log_output.insert("end", message + "\n")
+        if "Run completed successfully" in message:
+            self.log_output.insert("end", message + "\n", "success")
+        elif "fail" in message.lower():
+            self.log_output.insert("end", message + "\n", "fail")
+        else:
+            self.log_output.insert("end", message + "\n")
         self.log_output.see("end")
         self.log_output.configure(state="disabled")
 
@@ -134,16 +145,26 @@ class RecipeGeneratorApp:
         if self._is_running:
             return
 
+        # Clear the log output text box before each run
+        self.log_output.configure(state="normal")
+        self.log_output.delete("1.0", "end")
+        self.log_output.configure(state="disabled")
+
         self._is_running = True
         self.run_button.configure(state="disabled")
         self._enqueue_log("Starting run...")
 
+        # Start the background thread
         thread = threading.Thread(
             target=self._run_in_background,
             args=(parent_mo, child_mo),
             daemon=True,
         )
+        self._last_thread = thread
         thread.start()
+
+        # Start the timeout timer (10 seconds)
+        self._timeout_timer = self.root.after(10000, self._timeout_check)
 
     def _run_in_background(self, parent_mo: str, child_mo: str) -> None:
         try:
@@ -153,6 +174,18 @@ class RecipeGeneratorApp:
             self._enqueue_log(f"Error: {exc}")
         finally:
             self._log_queue.put("__DONE__")
+            # Cancel the timeout timer if still running
+            if self._timeout_timer is not None:
+                self.root.after_cancel(self._timeout_timer)
+                self._timeout_timer = None
+
+    def _timeout_check(self):
+        if self._is_running:
+            self._enqueue_log("Run failed (timeout)")
+            self._log_queue.put("__DONE__")
+            self._is_running = False
+            self.run_button.configure(state="normal")
+            self._timeout_timer = None
 
     def run(self) -> None:
         self.root.mainloop()

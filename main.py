@@ -41,6 +41,29 @@ def run_recipe_once(parent_mo: str, child_mo: str, log_fn: LogFn = None) -> str:
         parent_mo, child_mo
     )
 
+    # Check for kitted ladder in product_display_name or bom_name and swap parent MO if needed
+    def get_ladder_size(item_str):
+        import re
+        match = re.search(r'(\d+\.\d+)', item_str)
+        return match.group(1) if match else None
+
+    # If kitted ladder, swap parent MO
+    if "kit" in product_display_name.lower() or "kit" in bom_name.lower():
+        size = get_ladder_size(product_display_name)
+        mo_map = {
+            "3.9": "BM/MO/06207-001",
+            "5.1": "BM/MO/2510358-002",
+            "6.3": "BM/MO/2510359-010",
+            "8.7": "BM/MO/2509522-001",
+            "9.6": "BM/MO/2509523-005",
+        }
+        if size in mo_map:
+            _log(f"Detected kitted ladder ({size}m), swapping parent MO to {mo_map[size]}")
+            # Re-call database with new parent MO
+            component_list, bom_name, product_display_name, child_detail = database.calling_database(
+                mo_map[size], child_mo
+            )
+
     _log(f"Fetched {len(component_list)} components for {product_display_name}.")
 
     formatted_components = formatting.format(str(component_list))

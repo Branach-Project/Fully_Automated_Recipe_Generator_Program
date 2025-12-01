@@ -113,6 +113,28 @@ class RecipeGeneratorApp:
         child_entry = ttk.Entry(main_frame, textvariable=self.child_var, width=30)
         child_entry.grid(row=3, column=0, sticky="ew", pady=(0, 8))
 
+        # Barcode scan logic: after scanning parent, focus child; after child, auto-run if valid
+        def on_parent_enter(event=None):
+            self.parent_var.set(parent_entry.get().strip())
+            child_entry.focus_set()
+            self.status_var.set("Parent MO scanned. Please scan Child MO.")
+
+        def on_child_enter(event=None):
+            self.child_var.set(child_entry.get().strip())
+            parent = self.parent_var.get().strip()
+            child = self.child_var.get().strip()
+            if parent == child:
+                self.status_var.set("Parent MO and Child MO cannot be the same. Please rescan.")
+                self.parent_var.set("")
+                self.child_var.set("")
+                parent_entry.focus_set()
+                return
+            self.status_var.set("Script loaded. Ready to run recipe.")
+            self.run_button.focus_set()
+
+        parent_entry.bind("<Return>", on_parent_enter)
+        child_entry.bind("<Return>", on_child_enter)
+
         # Sample buttons
         button_frame = ttk.Frame(main_frame)
         button_frame.grid(row=4, column=0, sticky="ew", pady=(0, 8))
@@ -124,14 +146,23 @@ class RecipeGeneratorApp:
         self.run_button = ttk.Button(main_frame, text="Run Recipe", command=self._handle_run)
         self.run_button.grid(row=5, column=0, sticky="ew")
 
+
+        # Last run time label
+        self._last_run_time = None
+        self._last_run_label_var = tk.StringVar()
+        self._last_run_label_var.set("")
+        last_run_label = ttk.Label(main_frame, textvariable=self._last_run_label_var, foreground="blue")
+        last_run_label.grid(row=6, column=0, sticky="ew", pady=(0, 4))
+        self._update_last_run_label()
+
         self.log_output = ScrolledText(main_frame, height=15, width=60, state="disabled")
-        self.log_output.grid(row=6, column=0, pady=(12, 0), sticky="nsew")
+        self.log_output.grid(row=7, column=0, pady=(12, 0), sticky="nsew")
 
         # Configure tags for colored output
         self.log_output.tag_configure("success", foreground="green")
         self.log_output.tag_configure("fail", foreground="red")
 
-        main_frame.rowconfigure(6, weight=1)
+        main_frame.rowconfigure(7, weight=1)
         main_frame.columnconfigure(0, weight=1)
 
     def _sample_fly(self):
@@ -180,6 +211,11 @@ class RecipeGeneratorApp:
         if not child_mo:
             messagebox.showwarning("Missing Child MO", "Please enter the child manufacturing order or B/F.")
             return
+        if parent_mo == child_mo:
+            self.parent_var.set("")
+            self.child_var.set("")
+            self.root.nametowidget("!frame.!entry").focus_set()  # parent_entry
+            return
 
         if self._is_running:
             return
@@ -192,6 +228,11 @@ class RecipeGeneratorApp:
         self._is_running = True
         self.run_button.configure(state="disabled")
         self._enqueue_log("Starting run...")
+
+        # Record the last run time
+        import time
+        self._last_run_time = time.time()
+        self._update_last_run_label()
 
         # Start the background thread
         thread = threading.Thread(
@@ -225,6 +266,22 @@ class RecipeGeneratorApp:
             self._is_running = False
             self.run_button.configure(state="normal")
             self._timeout_timer = None
+
+    def _update_last_run_label(self):
+        import time
+        if self._last_run_time is None:
+            self._last_run_label_var.set("")
+        else:
+            elapsed = int(time.time() - self._last_run_time)
+            if elapsed < 60:
+                self._last_run_label_var.set(f"Last run: {elapsed} seconds ago")
+            elif elapsed < 600:
+                mins = elapsed // 60
+                secs = elapsed % 60
+                self._last_run_label_var.set(f"Last run: {mins} min {secs} sec ago")
+            else:
+                self._last_run_label_var.set("")
+        self.root.after(1000, self._update_last_run_label)
 
     def run(self) -> None:
         self.root.mainloop()

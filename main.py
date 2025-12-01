@@ -123,12 +123,7 @@ class RecipeGeneratorApp:
             self.child_var.set(child_entry.get().strip())
             parent = self.parent_var.get().strip()
             child = self.child_var.get().strip()
-            if parent == child:
-                self.status_var.set("Parent MO and Child MO cannot be the same. Please rescan.")
-                self.parent_var.set("")
-                self.child_var.set("")
-                parent_entry.focus_set()
-                return
+            # Removed check that prevented parent and child MO from being the same
             self.status_var.set("Script loaded. Ready to run recipe.")
             self.run_button.focus_set()
 
@@ -211,11 +206,7 @@ class RecipeGeneratorApp:
         if not child_mo:
             messagebox.showwarning("Missing Child MO", "Please enter the child manufacturing order or B/F.")
             return
-        if parent_mo == child_mo:
-            self.parent_var.set("")
-            self.child_var.set("")
-            self.root.nametowidget("!frame.!entry").focus_set()  # parent_entry
-            return
+        # Removed check that prevented parent and child MO from being the same
 
         if self._is_running:
             return

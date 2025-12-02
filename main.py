@@ -136,8 +136,6 @@ class RecipeGeneratorApp:
         button_frame.grid(row=4, column=0, sticky="ew", pady=(0, 8))
         sample_fly_btn = ttk.Button(button_frame, text="Sample Fly", command=self._sample_fly)
         sample_fly_btn.pack(side="left", padx=(0, 8))
-        sample_base_btn = ttk.Button(button_frame, text="Sample Base", command=self._sample_base)
-        sample_base_btn.pack(side="left")
 
         self.run_button = ttk.Button(main_frame, text="Run Recipe", command=self._handle_run)
         self.run_button.grid(row=5, column=0, sticky="ew")

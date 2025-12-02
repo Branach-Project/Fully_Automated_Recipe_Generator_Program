@@ -124,8 +124,9 @@ class RecipeGeneratorApp:
             parent = self.parent_var.get().strip()
             child = self.child_var.get().strip()
             # Removed check that prevented parent and child MO from being the same
-            self.status_var.set("Script loaded. Ready to run recipe.")
+            self.status_var.set("Script loaded. Running recipe...")
             self.run_button.focus_set()
+            self._handle_run()  # Automatically run recipe after child MO is scanned
 
         parent_entry.bind("<Return>", on_parent_enter)
         child_entry.bind("<Return>", on_child_enter)
@@ -271,7 +272,7 @@ class RecipeGeneratorApp:
                 secs = elapsed % 60
                 self._last_run_label_var.set(f"Last run: {mins} min {secs} sec ago")
             else:
-                self._last_run_label_var.set("")
+                self._last_run_label_var.set("Last run: 10min+")
         self.root.after(1000, self._update_last_run_label)
 
     def run(self) -> None:

@@ -290,7 +290,7 @@ class RecipeGenerator:
         #print('this is what the dynamic select picks', split_BF)
         #print('key here', key)
         terrain_master_components = {"BP-LEV-8609-01", "BP-LEV-8700-01", "BP-LEV-8606-01"}
-        t3 = {"BP-TOP-0001-01", "BP-TOP-8001-01"}
+        t3 = {"BP-TOP-0001-01", "BP-TOP-8001-01", "BK-EXF-9510-01"}
         contains_t3 = any(sublist[0] in t3 for sublist in split_BF[key])
 
         for i in range(len(split_BF[key]) - 1, -1, -1):

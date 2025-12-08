@@ -51,11 +51,11 @@ def run_recipe_once(parent_mo: str, child_mo: str, log_fn: LogFn = None) -> str:
     if "kit" in product_display_name.lower() or "kit" in bom_name.lower():
         size = get_ladder_size(product_display_name)
         mo_map = {
-            "3.9": "BM/MO/06207-001",
-            "5.1": "BM/MO/2510358-002",
-            "6.3": "BM/MO/2510359-010",
-            "8.7": "BM/MO/2509522-001",
-            "9.6": "BM/MO/2509523-005",
+            "3.9": "BM/MO/2511385-025",
+            "5.1": "BM/MO/2511386-008",
+            "6.3": "BM/MO/2510362-001",
+            "8.7": "BM/MO/2508284-001",
+            "9.6": "Brana/MO/00071", #"BM/MO/2509523-005",
         }
         if size in mo_map:
             _log(f"Detected kitted ladder ({size}m), swapping parent MO to {mo_map[size]}")

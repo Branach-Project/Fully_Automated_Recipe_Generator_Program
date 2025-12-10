@@ -153,7 +153,7 @@ class RecipeGenerator:
 
                 # Replace the DistEndToLastRungCut variable call with the correct dictionary key
                 expr = expr.replace(" ", "").replace("()", "").replace("DistEndToLastRungCut", f"DistEndToLastRungCut['{key}']")
-                
+                print("Check valid variables in formula:", local_vars)
                 # Evaluate safely using restricted environment
                 return eval(expr, {"__builtins__": None}, local_vars)
             except (SyntaxError, ValueError, NameError) as e:
@@ -373,16 +373,16 @@ class RecipeGenerator:
                     #print("2 the latch type" , self.LatchType)
                     #print("key", key)
                     if self.LadderFoot != "TM" and key == "F" and self.LatchType == "Conventional":
-                        self.DistEndToLastRungCut[key] = 305
+                        self.DistEndToLastRungCut[key] = self.Pitch
                     if (self.LadderFoot == "SF" or self.LadderFoot == "SN" or self.LadderFoot == "SG") and key == "F":
-                        self.DistEndToLastRungCut[key] = 305
+                        self.DistEndToLastRungCut[key] = self.Pitch
                     if self.LadderFoot == "RF" and key == "F":
-                        self.DistEndToLastRungCut[key] = 305
+                        self.DistEndToLastRungCut[key] = self.Pitch
                     #dynamic for base
                     if (self.LadderFoot == "SF" or self.LadderFoot == "SN" or self.LadderFoot == "SG") and key == "B":
                         self.DistEndToLastRungCut[key] = 232.5 #232.5
                     if self.LadderFoot == "RF" and key == "B":
-                        self.DistEndToLastRungCut[key] = 305
+                        self.DistEndToLastRungCut[key] = self.Pitch
                     
                     
                 # Calculate offsets
@@ -560,20 +560,11 @@ class RecipeGenerator:
             ITEM (str): Ladder item description.
         """
         position_identifiers = ["0", "LU", "LO", "LI", "LD", "RU", "RO", "RI", "RD"]
-
-        if key == "B":
-            self.ladder_end_calibration_offset = 255 - self.DistEndToLastRungCut[key] 
-        elif key == "F":
-            self.ladder_end_calibration_offset = 40 - self.DistEndToLastRungCut[key]
         
 
         # If the ladder stilelength changes, change holes position according at the end of the ladder as well
         # Calculate x-position of the last rung
         last_rung_x = -(self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1))
-        # Shift all holes beyond the last rung by the ladder_end_calibration_offset
-        for hole in coords:
-            if hole[0] < last_rung_x:
-                hole[0] -= self.ladder_end_calibration_offset
 
 
         # Open file to write final recipe
@@ -589,7 +580,7 @@ class RecipeGenerator:
                 f"PITCH:{self.Pitch}    FIRSTOFRUNGOFFSET:{self.DistEndToFirstRungRaw}  "
                 f"STILELENGHT:{self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch)}   "
                 f"DOCKANGBOT:{'0'}   DOCKANGTOP:{'0'}   "
-                f"RUNGNO:{self.RungCount}   DOCKING:{'true' if self.DistEndToLastRungCut[key] < 305 else 'false'}   CALIBRATION:{self.ladder_end_calibration_offset}     "
+                f"RUNGNO:{self.RungCount}   DOCKING:{'true' if self.DistEndToLastRungCut[key] < self.Pitch else 'false'}     "
             )
 
             # Write each hole coordinate with associated data
@@ -708,7 +699,7 @@ class RecipeGenerator:
                 self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
 
             #display whether the ladder needs to be docked or not
-            if self.DistEndToLastRungCut[execute_fly_or_base] == 305:
+            if self.DistEndToLastRungCut[execute_fly_or_base] == self.Pitch:
                 print("Docking for the ladder not needed")
             else:
                 print("Docking for the ladder needed")

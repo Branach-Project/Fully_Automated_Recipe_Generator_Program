@@ -614,7 +614,7 @@ class RecipeGenerator:
         test_array.append('BP-EXF-0110-02-TEMP')
 
         # Remove certain IDs
-        remove = ["BP-EXF-0094-01111", "BP-FCL-0016-01", "BP-EXF-0010-02"]
+        remove = ["BP-EXF-0094-01111", "BP-FCL-0016-01"]
         product_id_list = [x for x in test_array if x not in remove]
 
         # Substitution rules if certain parts are replaced by others

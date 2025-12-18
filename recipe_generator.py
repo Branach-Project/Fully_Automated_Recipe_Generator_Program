@@ -232,13 +232,14 @@ class RecipeGenerator:
                     # Update ladder parameters based on matching section_data entry
                     for index, sublist in enumerate(self.section_data):
                         if sublist[0] == float(num) and section_type == sublist[1]:
-                            self.StileLength = sublist[2]
+                            #self.StileLength = sublist[2]
+                            self.StileLength = self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[section_type], self.Pitch)
                             # Adjust pitch and DistEndToFirstRungRaw if FEU is found in the item name
                             if "FEU" in row[1]:
                                 self.Pitch = 300
                                 self.DistEndToFirstRungRaw = 260 if section_type == "F" else 300
                             self.RungCount = sublist[3]
-                            #print("stile length", self.StileLength)
+                            print("stile length", self.StileLength)
                             #print("rung count: ", self.RungCount)
                             updated_vals = True
         #find the typ of ladder foot
@@ -362,6 +363,7 @@ class RecipeGenerator:
                 # Fetch position details from posData
                 self.cursor.execute("SELECT * FROM posData WHERE ID LIKE ?", (str(ID),))
                 row = self.cursor.fetchone()
+                #print("posData in generate coords ----------------", row)
                 # Evaluate end cut offset if provided
                 if row[18] != None:
                     endCut = self.safe_eval(row[18], key)
@@ -391,14 +393,21 @@ class RecipeGenerator:
                 y_fomrula = self.safe_eval(row[14], key) if row[14] else 0
                 Z_formula = row[9] if row[9] else 0
 
+
                 #raw coordinates before
                 #print("raw coordinates before offset", row)
                 # Update coordinates with offsets and additional data
                 for i in range(len(raw_coords)):
+                    if row[1] == 'BP-EXA-0100-01':
+                        print("coordinate value", raw_coords[i][0])
                     #Don't need hole base offset
                     raw_coords[i][0] += x_formula + row[10] + rows[i][6] # orginal coord + component base offset + hole base offset
                     raw_coords[i][1] += y_fomrula + row[11] + rows[i][7]
                     raw_coords[i][2] += Z_formula + row[12] + rows[i][8]
+
+                    if row[1] == 'BP-EXA-0100-01':
+                        print("here is the formula", x_formula, row[10], rows[i][6])
+                        print("coordinate value", raw_coords[i][0])
                     # raw_coords[i][0] += x_offset + row[10] # orginal coord + component base offset + hole base offset
                     # raw_coords[i][1] += y_offset + row[11]
                     # raw_coords[i][2] += row[12]

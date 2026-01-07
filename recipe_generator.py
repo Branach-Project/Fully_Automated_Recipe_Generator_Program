@@ -583,13 +583,16 @@ class RecipeGenerator:
             #print("distendtolastrung is here", self.DistEndToLastRungCut)
             #print("ladder length before moderation", self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch))
             #print("her is the ladder end calibration", self.ladder_end_calibration_offset)
+            # Use self.StileLength if docking is false, otherwise use the original formula
+            docking_status = self.DistEndToLastRungCut[key] < self.Pitch
+            stile_length_value = self.StileLength if not docking_status else (self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch))
             file.write(
                 f"ID:{'empty'}   ITEM: {ITEM}    TYPE:{'EXTENSION'}     "
                 f"FBDESIGNATION:{key}     OUTSIDEWIDTH:{self.SectionWidth}     "
                 f"PITCH:{self.Pitch}    FIRSTOFRUNGOFFSET:{self.DistEndToFirstRungRaw}  "
-                f"STILELENGHT:{self.DistEndToFirstRungRaw + self.Pitch * (self.RungCount - 1) + min(self.DistEndToLastRungCut[key], self.Pitch)}   "
+                f"STILELENGHT:{stile_length_value}   "
                 f"DOCKANGBOT:{'0'}   DOCKANGTOP:{'0'}   "
-                f"RUNGNO:{self.RungCount}   DOCKING:{'true' if self.DistEndToLastRungCut[key] < self.Pitch else 'false'}     "
+                f"RUNGNO:{self.RungCount}   DOCKING:{'true' if docking_status else 'false'}     "
             )
 
             # Write each hole coordinate with associated data
@@ -683,6 +686,7 @@ class RecipeGenerator:
                             break
 
             # --- All code below uses updated self.StileLength ---
+            print("Final Stile Length used:", self.StileLength)
             coords = self.generate_coords(split_BF[key], key)
             sorted_coordinates = self.sort_by_x_and_face(coords)
             validated_coordinates = self.validate_and_correct_coordinates(

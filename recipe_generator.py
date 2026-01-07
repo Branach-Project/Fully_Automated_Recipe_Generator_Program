@@ -651,67 +651,67 @@ class RecipeGenerator:
         split_BF = self.filter_and_separate(flat_list_ID)
         #print("Here is the result after filter and separate", split_BF)
 
-        for key in list(split_BF.keys())[::-1]: #list is reversed because we need base first for the foot type
+
+        for key in list(split_BF.keys())[::-1]:
             # Set SectionWidth and DistEndToFirstRungRaw depending on section type
             self.SectionWidth = 450 if key == "B" else 367
             self.DistEndToFirstRungRaw = 290 if key == "B" else 305
 
             # Get section details from DB and update class attributes
-            #print("Here is the inputs to get_section_info", split_BF, "here is the key", key)
             self.get_section_info(split_BF, key)
-            # dynamic selection
-            #print("input to dynamic select",split_BF,"here is the key", key)
-            #print("Here is the product display name", product_display_name)
             split_BF_withkey = self.dynamic_select(split_BF, key, product_display_name)
             split_BF = split_BF_withkey
-            #print("Here is the split_BF after dynamic select", split_BF)
 
             # Remove EXL parts from the main list after processing section info
             for i in range(len(split_BF[key]) - 1, -1, -1):
                 if "EXL" in split_BF[key][i][0]:
                     split_BF[key].pop(i)
 
-            # Generate hole coordinates
-            if key == "F":
-                #print("Here is what the split_BF looks like before generate coords", split_BF[key])
-                pass
+            # --- Determine docking status early ---
+            docking_needed = self.DistEndToLastRungCut[key] < self.Pitch
+
+            # --- If docking is false, update stile length from section_data ---
+            if not docking_needed:
+                # Find stile length from section_data
+                section_num = None
+                if hasattr(self, 'ITEM') and self.ITEM:
+                    section_num = self.extract_number(self.ITEM)
+                if section_num is not None:
+                    for entry in self.section_data:
+                        if entry[0] == float(section_num) and entry[1] == key:
+                            self.StileLength = entry[2]
+                            break
+
+            # --- All code below uses updated self.StileLength ---
             coords = self.generate_coords(split_BF[key], key)
-            # Sort and validate coordinates
             sorted_coordinates = self.sort_by_x_and_face(coords)
             validated_coordinates = self.validate_and_correct_coordinates(
-                sorted_coordinates, 
-                self.expected_plane[key], 
+                sorted_coordinates,
+                self.expected_plane[key],
                 self.expected_range[key]
             )
 
-            # Check if Terrain Master exists in the parts; if yes, apply offset
             terrain_master_components = ['BP-LEV-8700-01', "BP-LEV-8606-01", "BP-LEV-8609-01", "BP-LEV-0056-01"]
             our_list_of_components = [item for row in split_BF[key] for item in row]
             if any(terrain_components in our_list_of_components for terrain_components in terrain_master_components):
-                #print("\nTerrain Master Detected: Adding relevant Offsets\n")
                 validated_coordinates = self.terrain_master_offset(validated_coordinates)
 
-            # Remove unreachable holes
             unreachable_removed = self.remove_unreachable_holes(validated_coordinates)
-
-            # Remove duplicate holes
             unreachable_removed = self.remove_duplicate_holes(unreachable_removed)
 
-            # Save the final coordinates to a text file
             self.format_and_save_coordinates(unreachable_removed, "test" + key, key, ITEM)
 
-            # If the user specifically requested to finalize a 'B' or 'F' section, save again under "testFinal"
-            print("execute fly or base" , execute_fly_or_base)
+            print("execute fly or base", execute_fly_or_base)
             if execute_fly_or_base == "B" and key == "B":
-                self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
+                self.format_and_save_coordinates(unreachable_removed, "testFinal", key, ITEM)
             elif execute_fly_or_base == "F" and key == "F":
-                self.format_and_save_coordinates(unreachable_removed, "test" + "Final", key, ITEM)
+                self.format_and_save_coordinates(unreachable_removed, "testFinal", key, ITEM)
 
-            #display whether the ladder needs to be docked or not
-            if self.DistEndToLastRungCut[execute_fly_or_base] == self.Pitch:
-                print("Docking for the ladder not needed")
-            else:
+            # Display docking status
+            if docking_needed:
                 print("Docking for the ladder needed")
+            else:
+                print("Docking for the ladder not needed")
 
         # Close database connections
         self.cursor.close()
